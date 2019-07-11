@@ -58,12 +58,14 @@ body{
 }
 
 .features .layout-column-1 .block{
+    font-family: "Lato";
     margin-bottom: 32px;
     background-color:white;
 }
 
 .features .layout-column-1 .block-1{
     height: 339px;
+    padding: 10px 10px;
 }
 
 .features .layout-column-1 .block-2{
@@ -107,4 +109,8 @@ body{
 .features .layout-column-3 .block-4{
     height: 400px;
     background-color:white;
-} 
+}
+
+.features .layout-column-1 .block h3{
+    color:#04bca6;
+}
