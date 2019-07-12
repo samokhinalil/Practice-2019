@@ -1,4 +1,4 @@
-body{
+body {
     margin: 0;
     min-width: 1511px;
     background-color: #eaedf1;
@@ -6,7 +6,7 @@ body{
 
 .wrapper {
     margin: 82px 83px 0px 80px;
-  }
+}
 
 .clearfix::after {
     content: "";
@@ -14,103 +14,289 @@ body{
     clear: both;
 }
 
-.header{
+.header {
     height: 295px;
     margin-bottom: 38px;
 }
 
-.header .layout-column{
-    background-color:#ffffff;
+.header .layout-column {
+    background-color: #ffffff;
 }
 
-.header .layout-column-1{
+.header .layout-column-1 {
     float: left;
     width: 435px;
     height: 100%;
 }
 
-.header .layout-column-2{
+.header .layout-column-2 {
     float: right;
     width: 825px;
     height: 100%;
 }
 
-.features .layout-column-1{
+.header .layout-column-1 .item {
+    float: left;
+    font-family: 'Signika', sans-serif;
+    text-align: center;
+    font-size: 16px;
+    color: white;
+    margin-top: -12px;
+    width: 100%;
+}
+
+.header .layout-column-1 .item img {
+    position: relative;
+    top: 9px;
+}
+
+.header .layout-column-1 .item-1 img {
+    left: 26px;
+}
+
+.header .layout-column-1 .item-2 img {
+    left: 2px;
+}
+
+.header .layout-column-1 .item-3 img {
+    left: 35px;
+}
+
+.header .layout-column-1 .item-4 img {
+    left: 16px;
+}
+
+.header .layout-column-1 .item span {
+    position: relative;
+}
+
+.header .layout-column-1 .item-1 span {
+    left: -15px;
+    top: 25px;
+}
+
+.header .layout-column-1 .item-2 span {
+    left: 0px;
+    top: 10px;
+}
+
+.header .layout-column-1 .item-3 span {
+    left: -15px;
+    top: 25px;
+}
+
+.header .layout-column-1 .item-4 span {
+    left: -15px;
+    top: 22px;
+}
+
+.header .layout-column-1 .item .item-1 {
+    float: left;
+    width: 25%;
+    height: 78px;
+    background-color: #16c4ec;
+}
+
+.header .layout-column-1 .item .item-2 {
+    float: left;
+    width: 25%;
+    height: 78px;
+    background-color: #fa5351;
+}
+
+.header .layout-column-1 .item .item-3 {
+    float: left;
+    width: 25%;
+    height: 78px;
+    background-color: #10cdc1;
+}
+
+.header .layout-column-1 .item .item-4 {
+    float: left;
+    width: 25%;
+    height: 78px;
+    background-color: #33495f;
+}
+
+.header .layout-column-1 .title {
+    font-family: 'Signika', sans-serif;
+    color: #33495F;
+    font-size: 30px;
+    position: relative;
+    bottom: 115px;
+    left: 215px;
+}
+
+.header .layout-column-1 .comment {
+    font-family: 'Lado', sans-serif;
+    color: #727F8D;
+    font-size: 17px;
+    position: relative;
+    bottom: 85px;
+    left: 23px;
+}
+
+.header .layout-column-1 .avatar {
+    margin-left: 20px;
+    margin-top: 28px;
+}
+
+.header .layout-column-2 .about {
+    width: 100%;
+    height: 216px;
+}
+
+.about .info {
+    float: left;
+    width: 404px;
+    height: 200px;
+    padding-top: 18px;
+    padding-left: 28px;
+}
+
+.about .info h1 {
+    color: #33495F;
+    font-family: 'Signika', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 38px;
+}
+
+.about .info p {
+    color: #637484;
+    font-family: 'Signika', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    text-align: justify;
+    position: relative;
+    top: -15px;
+    line-height: 31px;
+}
+
+.header .layout-column-2 .about .info .blue {
+    color: #36CBEE;
+}
+
+.header .layout-column-2 .about .link {
+    width: 350px;
+    height: 212px;
+    float: right;
+}
+
+.header .layout-column-2 .about .link a {
+    color: #33495F;
+    font-family: 'Signika', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 21px;
+    text-align: center;
+    position: relative;
+    top: 105px;
+    left: 40px;
+}
+
+.header .layout-column-2 .about .link a:last-child {
+    color: #FA5452;
+    border-bottom: 1px solid #33495F;
+    padding-bottom: 35px;
+    letter-spacing: 3px;
+    position: relative;
+    top: 125px;
+    left: 40px;
+}
+
+.header .layout-column-2 .icons {
+    width: 100%;
+    height: 80px;
+    clear: both;
+    padding-left: 25px;
+}
+
+.header .layout-column-2 .icons .icon {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin-right: 40px;
+    margin-top: 23px;
+}
+
+.features .layout-column-1 {
     float: left;
     width: 635px;
-    height:1096px;
+    height: 1096px;
 }
 
-.features .layout-column-2{
+.features .layout-column-2 {
     float: left;
     width: 89px;
-    height:1174px;
+    height: 1174px;
 }
 
-.features .layout-column-3{
+.features .layout-column-3 {
     float: left;
     width: 624px;
-    height:1165px;
+    height: 1165px;
 }
 
-.footer{
+.footer {
     min-height: 120px;
 }
 
-.features .layout-column-1 .block{
+.features .layout-column-1 .block {
     font-family: "Lato";
     margin-bottom: 32px;
-    background-color:white;
+    background-color: white;
 }
 
-.features .layout-column-1 .block-1{
+.features .layout-column-1 .block-1 {
     height: 339px;
     padding: 10px 10px;
 }
 
-.features .layout-column-1 .block-2{
+.features .layout-column-1 .block-2 {
     height: 323px;
 }
 
-.features .layout-column-1 .block-3{
+.features .layout-column-1 .block-3 {
     height: 170px;
 }
 
-.features .layout-column-1 .block-4{
+.features .layout-column-1 .block-4 {
     height: 170px;
 }
 
-.features .layout-column-3 .block{
+.features .layout-column-3 .block {
     margin-bottom: 32px;
     background-color: #dbe1e8;
 }
 
-.features .layout-column-3 .block-1{
+.features .layout-column-3 .block-1 {
     height: 405px;
     background-color: #eaedf1;
     border-bottom: 3px dotted #dbe1e8;
 }
 
 .features .layout-column-3 .block-1 .post {
-    width:100%;
+    width: 100%;
     height: 170px;
     background-color: #dbe1e8;
     margin-bottom: 32px;
 }
 
-.features .layout-column-3 .block-2{
+.features .layout-column-3 .block-2 {
     height: 130px;
 }
 
-.features .layout-column-3 .block-3{
+.features .layout-column-3 .block-3 {
     height: 130px;
 }
 
-.features .layout-column-3 .block-4{
+.features .layout-column-3 .block-4 {
     height: 400px;
-    background-color:white;
+    background-color: white;
 }
 
-.features .layout-column-1 .block h3{
-    color:#04bca6;
+.features .layout-column-1 .block h3 {
+    color: #04bca6;
 }
