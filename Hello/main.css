@@ -274,6 +274,7 @@ body {
     width: 614px;
     height: 320px;
     background-color: #ffffff;
+    color:#33495f;
 }
 
 .features .layout-column-1 .block-2 {
@@ -575,7 +576,7 @@ body {
 }
 
 .features .layout-column-3 {
-    float: right;
+    float: left;
     margin-right: 0px;
     width: 623px;
     height: 1164px;
@@ -645,3 +646,56 @@ body {
     margin-left: 13px;
     margin-right: 13px;
 }
+
+.features .layout-column-3 .block-4 .icons {
+    width: 100%;
+    height: 140px;
+  }
+  
+  .features .layout-column-3 .block-4 .icons .icon-box {
+    width: 15%;
+    height: 140px;
+    display: inline-block;
+    margin-right: 5px;
+    margin-top:2px;
+    text-align: center;
+  }
+  
+  .features .layout-column-3 .block-4 .icons .icon-box:first-child {
+    margin-left: 10px;
+  }
+  
+  .features .layout-column-3 .block-4 .icons .icon {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    position: relative;
+    top: 17px;
+    left: 10px;
+  }
+  
+  .features .layout-column-3 .block-4 .icons .icon-green {
+    background-color: #10CDC1;
+  }
+  
+  .features .layout-column-3 .block-4 .icons .icon-blue {
+    background-color: #16C4EC;
+  }
+  
+  .features .layout-column-3 .block-4 .icons .icon-red {
+    background-color: #FA5351;
+  }
+  
+  .features .layout-column-3 .block-4 .icons .icon-box span {
+    font-family: 'Signika', sans-serif;
+    color: #57697B;
+    font-size: 15px;
+    position: relative;
+    top: 26px;
+  }
+  
+  .features .layout-column-3 .block-4 .icons .icon-box img {
+    position: relative;
+    top: 19px;
+  }
+  
