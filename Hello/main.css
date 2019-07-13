@@ -617,3 +617,31 @@ body {
     top: 5x;
     left: 211px;
 }
+
+.footer {
+    min-height: 120px;
+    background-color: #eaedf1;
+    text-align: center;
+    padding-left: 4px;
+    padding-top: 7px;
+}
+
+.footer span {
+    color: #CED4DD;
+    font-size: 90px;
+    position: relative;
+    top: 20px;
+    font-weight: 600;
+}
+
+.footer .text {
+    color: #34495e;
+    font-size: 18px;
+    position: relative;
+    top: -20px;
+    font-style: italic;
+    font-family: 'Signika', sans-serif;
+    font-weight: 100;
+    margin-left: 13px;
+    margin-right: 13px;
+}
