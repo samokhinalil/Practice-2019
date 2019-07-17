@@ -67,6 +67,7 @@ var lastFire = Date.now();
 var gameTime = 0;
 var isGameOver;
 var terrainPattern;
+var isCrossManna;
 
 var score = 0;
 var scoreEl = document.getElementById('score');
@@ -200,15 +201,18 @@ function updateEntities(dt) {
     for (var i = 0; i < manna.length; i++) {
         var pos = manna[i].pos;
         var size = manna[i].sprite.size;
-        // manna[i].sprite.update(dt);
-        if (boxCollides(pos, size, player.pos, player.sprite.size)) {
-            manna.splice(i, 1);
-            i--;
-            scoreManna += 20;
+        var pos2 = player.pos;
+        var size2 = player.sprite.size;
+
+        if (boxCollides(pos, size, pos2, size2)) {
+            manna[i].sprite.update(dt);
+            if (manna[i].sprite.done) {
+                manna.splice(i, 1);
+                i--;
+                scoreManna += 20;
+            }
+            break;
         }
-        // if(manna[i].sprite.done){
-        //    //
-        // }
     }
 
     // Update all the enemies
@@ -481,7 +485,7 @@ function createManna() {
         Math.floor(Math.random() * (canvas.height - 50 + 1))
         ],
         sprite: new Sprite('img/sprites.png', [0, 160], [58, 50],
-            4, [0, 1, 2, 3])
+            15, [0, 1, 2, 3], null, true)
     });
 
     for (var j = 0; j < manna.length - 1; j++) {
