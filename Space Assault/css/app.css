@@ -28,8 +28,16 @@ canvas {
 }
 
 #score {
+    min-width:100px;
     float: right;
     color: white;
+    font-size: 2em;
+}
+
+#score-manna {
+    min-width:100px;
+    float: right;
+    color: greenyellow;
     font-size: 2em;
 }
 
