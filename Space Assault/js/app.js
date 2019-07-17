@@ -403,11 +403,11 @@ function reset() {
     gameTime = 0;
     score = 0;
 
+    player.pos = [50, canvas.height / 2];
     enemies = [];
     bullets = [];
     megaliths = [];
     createMegaliths(4, 8);
-    player.pos = [50, canvas.height / 2];
 };
 
 function createMegaliths(min, max) {
