@@ -204,9 +204,10 @@ function updateEntities(dt) {
         var size2 = player.sprite.size;
         manna[i].sprite.update(dt);
         if (boxCollides(pos, size, pos2, size2) && !manna[i].sprite.cross) {
+            manna[i].sprite.frames = [0, 1, 2, 3];
             manna[i].sprite.cross = true;
             manna[i].sprite.once = true;
-            manna[i].sprite.speed = 8;
+            manna[i].sprite.speed = 4;
             scoreManna += 20;
             break;
         }
@@ -487,7 +488,7 @@ function createManna() {
         Math.floor(Math.random() * (canvas.height - 50 + 1))
         ],
         sprite: new Sprite('img/sprites.png', [0, 160], [58, 50],
-            0, [0, 1, 2, 3], null, false, false)
+            1, [0, 1], null, false, false)
     });
 
     for (var j = 0; j < manna.length - 1; j++) {
