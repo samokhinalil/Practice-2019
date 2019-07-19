@@ -47,6 +47,8 @@ namespace Tanks
             "********************"
         };
 
+        public int Score { get; private set; } = 0;
+
         public Game(int width, int height, int applesCount, int tanksCount, int speed, Graphics graphics)
         {
             this.width = width;
@@ -67,17 +69,19 @@ namespace Tanks
         public void Init()
         {
             walls = new List<Wall>();
-            for (int i = 0; i < wallArrangement.Count(); i++)
-            {
-                for (int j = 0; j < wallArrangement[i].Length; j++)
-                {
-                    if (wallArrangement[i][j] == '*')
-                    {
-                        walls.Add(new Wall(j, i));
-                    }
-                }
-            }
+            CreateWalls();
 
+            CreateKolobok();
+
+            apples = new List<Apple>();
+            CreateApples();
+
+            tanks = new List<Tank>();
+            CreateTanks();
+        }
+
+        private void CreateKolobok()
+        {
             while (true)
             {
                 kolobok = new Kolobok();
@@ -87,28 +91,10 @@ namespace Tanks
                     break;
                 }
             }
+        }
 
-            apples = new List<Apple>();
-            while (apples.Count < applesCount)
-            {
-                apples.Add(new Apple());
-                if (apples.Last().CollidesWith(kolobok))
-                {
-                    apples.RemoveAt(apples.Count - 1);
-                    continue;
-                }
-
-                foreach (var wall in walls)
-                {
-                    if (apples.Last().CollidesWith(wall))
-                    {
-                        apples.RemoveAt(apples.Count - 1);
-                        break;
-                    }
-                }
-            }
-
-            tanks = new List<Tank>();
+        private void CreateTanks()
+        {
             while (tanks.Count < tanksCount)
             {
                 tanks.Add(new Tank());
@@ -129,10 +115,31 @@ namespace Tanks
             }
         }
 
+        private void CreateWalls()
+        {
+            walls = new List<Wall>();
+            for (int i = 0; i < wallArrangement.Count(); i++)
+            {
+                for (int j = 0; j < wallArrangement[i].Length; j++)
+                {
+                    if (wallArrangement[i][j] == '*')
+                    {
+                        walls.Add(new Wall(j, i));
+                    }
+                }
+            }
+        }
+
         public void Draw()
         {
             graphics.DrawImage(kolobok.Img, kolobok.X * kolobok.Size, kolobok.Y * kolobok.Size, kolobok.Size, kolobok.Size);
+            DrawWalls();
+            DrawTanks();
+            DrawApples();
+        }
 
+        private void DrawWalls()
+        {
             Wall wall;
             for (int i = 0; i < walls.Count; i++)
             {
@@ -140,7 +147,10 @@ namespace Tanks
                 graphics.DrawImage(wall.Img, wall.X * wall.Size,
                     wall.Y * wall.Size, wall.Size, wall.Size);
             }
+        }
 
+        private void DrawTanks()
+        {
             Tank tank;
             for (int i = 0; i < tanks.Count; i++)
             {
@@ -148,7 +158,10 @@ namespace Tanks
                 graphics.DrawImage(tank.Img, tank.X * tank.Size, tank.Y * tank.Size,
                     tank.Size, tank.Size);
             }
+        }
 
+        private void DrawApples()
+        {
             Apple apple;
             for (int i = 0; i < apples.Count; i++)
             {
@@ -197,6 +210,19 @@ namespace Tanks
             }
 
             delta += 5;
+
+            for (int i=0; i<apples.Count;i++)
+            {
+                if (kolobok.CollidesWith(apples[i]))
+                {
+                    apples.RemoveAt(i);
+                    Score++;
+                    break;
+                }
+            }
+
+            CreateApples();
+            DrawApples();
         }
 
         public void Move(MovableMapObject movable, int delta)
@@ -250,6 +276,28 @@ namespace Tanks
             if (KeyDown != null)
             {
                 KeyDown -= new KeyEventHandler(kolobok.OnKeyDown);
+            }
+        }
+
+        private void CreateApples()
+        {
+            while (apples.Count < applesCount)
+            {
+                apples.Add(new Apple());
+                if (apples.Last().CollidesWith(kolobok))
+                {
+                    apples.RemoveAt(apples.Count - 1);
+                    continue;
+                }
+
+                foreach (var wall in walls)
+                {
+                    if (apples.Last().CollidesWith(wall))
+                    {
+                        apples.RemoveAt(apples.Count - 1);
+                        break;
+                    }
+                }
             }
         }
     }

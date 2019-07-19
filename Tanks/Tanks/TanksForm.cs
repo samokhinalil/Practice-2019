@@ -55,6 +55,7 @@ namespace Tanks
         {
             game.Step();
             map.Invalidate();
+            tbScore.Text = game.Score.ToString();
         }
 
         private void BtnStartGame_Click(object sender, EventArgs e)
