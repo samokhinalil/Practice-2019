@@ -8,16 +8,16 @@ using Tanks.Properties;
 
 namespace Tanks
 {
-    public class Tank : MovableMapObject
+    public class Wall : MapObject
     {
-        public Tank()
+        public Wall()
         {
-            Img = new Bitmap(Resources.TankDown);
+            Img = new Bitmap(Resources.Wall);
         }
 
-        public Tank(int x, int y) : base(x, y)
+        public Wall(int x, int y) : base(x, y)
         {
-            Img = new Bitmap(Resources.TankDown);
+            Img = new Bitmap(Resources.Wall);
         }
     }
 }

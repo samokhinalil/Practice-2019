@@ -8,9 +8,9 @@ namespace Tanks
 {
     public enum Direction
     {
-        RIGHT,
+        DOWN,
         LEFT,
         UP,
-        DOWN
+        RIGHT
     }
 }

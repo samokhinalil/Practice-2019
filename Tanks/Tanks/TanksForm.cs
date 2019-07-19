@@ -12,10 +12,14 @@ namespace Tanks
 {
     public partial class TanksForm : Form
     {
+        private PictureBox map;
+        private Bitmap backgroungMap;
+        private Graphics mapGraphics;
+
+        private Game game;
+
+        public static int CellSize = 25;
         public static Random rnd = new Random();
-        PictureBox map;
-        Bitmap backgroungMap;
-        Graphics mapGraphics;
 
         public TanksForm()
         {
@@ -24,10 +28,15 @@ namespace Tanks
 
         private void TanksForm_Load(object sender, EventArgs e)
         {
-            CreateBitmapAtRuntime(500, 500);
-            Game game = new Game();
-            GameView gameView = new GameView(map, mapGraphics);
-            gameView.Refresh();
+            int width = 500;
+            int height = 500;
+            int applesCount = 5;
+            int tanksCount = 5;
+            int speed = 10;
+            CreateBitmapAtRuntime(width, height);
+            game = new Game(width, height, applesCount, tanksCount, speed, mapGraphics);
+            game.Start();
+            map.Invalidate();
         }
 
         public void CreateBitmapAtRuntime(int width, int height)
@@ -40,6 +49,23 @@ namespace Tanks
             mapGraphics = Graphics.FromImage(backgroungMap);
             mapGraphics.FillRectangle(Brushes.Black, 0, 0, width, height);
             map.Image = backgroungMap;
+        }
+
+        private void GameTimer_Tick(object sender, EventArgs e)
+        {
+            game.Step();
+            map.Invalidate();
+        }
+
+        private void BtnStartGame_Click(object sender, EventArgs e)
+        {
+            btnStartGame.Visible = false;
+            gameTimer.Enabled = true;
+        }
+
+        private void TanksForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            game.OnKeyDown(e.KeyCode);
         }
     }
 }

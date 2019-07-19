@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ECE49C79-3630-49F9-B7BA-ECDA8875FA91}</ProjectGuid>
+    <ProjectGuid>{CF14DF42-6E60-4518-A9B4-471761D750C5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Tanks</RootNamespace>
     <AssemblyName>Tanks</AssemblyName>
@@ -46,36 +46,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\BunController.cs" />
-    <Compile Include="Models\Apple.cs" />
-    <Compile Include="Models\Bun.cs" />
+    <Compile Include="Apple.cs" />
+    <Compile Include="Kolobok.cs" />
     <Compile Include="Direction.cs" />
-    <Compile Include="Models\Game.cs" />
-    <Compile Include="Models\Tank.cs" />
-    <Compile Include="Views\AppleView.cs" />
-    <Compile Include="Views\BunView.cs" />
-    <Compile Include="Views\GameView.cs" />
-    <Compile Include="Views\MapObjectView.cs" />
-    <Compile Include="Models\MovableMapObject.cs" />
-    <Compile Include="Views\MovableMapObjectView.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="MapObject.cs" />
+    <Compile Include="MovableMapObject.cs" />
+    <Compile Include="Tank.cs" />
     <Compile Include="TanksForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TanksForm.Designer.cs">
       <DependentUpon>TanksForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\MapObject.cs" />
-    <Compile Include="MVC\Controller.cs" />
-    <Compile Include="MVC\Model.cs" />
-    <Compile Include="MVC\View.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\TankView.cs" />
-    <Compile Include="Models\Wall.cs" />
-    <Compile Include="Views\WallView.cs" />
-    <EmbeddedResource Include="TanksForm.resx">
-      <DependentUpon>TanksForm.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="Wall.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -86,6 +72,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TanksForm.resx">
+      <DependentUpon>TanksForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

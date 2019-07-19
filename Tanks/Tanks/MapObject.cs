@@ -30,11 +30,7 @@ namespace Tanks
 
         public bool CollidesWith(MapObject mapObject)
         {
-            if (X == mapObject.X && Y == mapObject.Y || X < 0 || X >= 20 || Y < 0 || Y >= 20)
-            {
-                return true;
-            }
-            return false;
+            return (X == mapObject.X && Y == mapObject.Y || X < 0 || X >= 20 || Y < 0 || Y >= 20);
         }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Tanks
 {
-    public class MovableMapObject:MapObject
+    public class MovableMapObject : MapObject
     {
         public int PreviousX { get; protected set; }
         public int PreviousY { get; protected set; }
@@ -27,8 +28,7 @@ namespace Tanks
             DirectionTo = direction;
         }
 
-
-        public void IdentifyDirection(int direction)
+        public void ChangeDirection(int direction)
         {
             switch (direction)
             {
@@ -55,7 +55,18 @@ namespace Tanks
                 default:
                     break;
             }
+        }
 
+        public bool CollidesWithWalls(List<Wall> Walls)
+        {
+            foreach (var wall in Walls)
+            {
+                if (CollidesWith(wall))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
