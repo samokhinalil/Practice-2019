@@ -7,19 +7,6 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Освободить все используемые ресурсы.
-        /// </summary>
-        /// <param name="disposing">истинно, если управляемый ресурс должен быть удален; иначе ложно.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Код, автоматически созданный конструктором форм Windows
 
         /// <summary>
@@ -32,6 +19,7 @@
             this.btnStartGame = new System.Windows.Forms.Button();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
             this.tbScore = new System.Windows.Forms.TextBox();
+            this.shotTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // btnStartGame
@@ -58,6 +46,11 @@
             this.tbScore.TabIndex = 1;
             this.tbScore.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // shotTimer
+            // 
+            this.shotTimer.Interval = 30;
+            this.shotTimer.Tick += new System.EventHandler(this.ShotTimer_Tick);
+            // 
             // TanksForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -69,6 +62,7 @@
             this.Name = "TanksForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tanks";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TanksForm_FormClosing);
             this.Load += new System.EventHandler(this.TanksForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TanksForm_KeyDown);
             this.ResumeLayout(false);
@@ -81,6 +75,7 @@
         private System.Windows.Forms.Button btnStartGame;
         private System.Windows.Forms.Timer gameTimer;
         private System.Windows.Forms.TextBox tbScore;
+        private System.Windows.Forms.Timer shotTimer;
     }
 }
 

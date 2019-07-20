@@ -52,6 +52,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="MapObject.cs" />
     <Compile Include="MovableMapObject.cs" />
+    <Compile Include="Shot.cs" />
     <Compile Include="Tank.cs" />
     <Compile Include="TanksForm.cs">
       <SubType>Form</SubType>
@@ -88,7 +89,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Images\ShotDown.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Images\Apple.png" />
   </ItemGroup>
@@ -118,6 +121,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\Wall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\ShotLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\ShotRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\ShotUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\GameOver.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

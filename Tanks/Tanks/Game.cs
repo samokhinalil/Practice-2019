@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Tanks.Properties;
 
 namespace Tanks
 {
@@ -14,6 +12,8 @@ namespace Tanks
         private List<Wall> walls = new List<Wall>();
         private List<Tank> tanks = new List<Tank>();
         private List<Apple> apples = new List<Apple>();
+        private List<Shot> kolobokShots = new List<Shot>();
+        private List<Shot> tanksShots = new List<Shot>();
 
         private int width;
         private int height;
@@ -22,7 +22,9 @@ namespace Tanks
         private int speed;
         private Graphics graphics;
         private int delta = 30;
+        private int deltaShot = 30;
         private bool gameOver;
+        private int cellSize = 25;
 
         private static string[] wallArrangement = {
             "********************",
@@ -66,17 +68,180 @@ namespace Tanks
             Subscribe();
         }
 
-        public void Init()
+        public void Step()
+        {
+            while (delta != cellSize + 5)
+            {
+                Update(kolobok, delta);
+
+                for (int i = 0; i < tanks.Count; i++)
+                {
+                    Update(tanks[i], delta);
+                }
+
+                delta += 5;
+                return;
+            }
+
+            kolobok.Move(walls);
+            delta = 5;
+            Update(kolobok, delta);
+
+            KillKolobokByTank();
+            MoveTanks();
+            KillKolobokByTank();
+            UpdateTanks();
+
+            delta += 5;
+
+            EatApple();
+            CreateApples();
+            DrawApples();
+        }
+
+        public void ShotStep()
+        {
+            while (deltaShot != cellSize + 5)
+            {
+                for (int i = 0; i < kolobokShots.Count; i++)
+                {
+                    Update(kolobokShots[i], deltaShot);
+                }
+
+                for (int i = 0; i < tanksShots.Count; i++)
+                {
+                    Update(tanksShots[i], deltaShot);
+                }
+
+                deltaShot += 5;
+                return;
+            }
+
+            deltaShot = 5;
+
+            KillKolobokByTankShot();
+            EraseDestroyedTank();
+            EraseKolobokShots();
+            EraseTankShots();
+            KillKolobokByTankShot();
+
+            CreateApples();
+            DrawApples();
+        }
+
+        private void UpdateTanks()
+        {
+            for (int i = 0; i < tanks.Count; i++)
+            {
+                Update(tanks[i], delta);
+            }
+        }
+
+        private void MoveTanks()
+        {
+            for (int i = 0; i < tanks.Count; i++)
+            {
+                tanks[i].Move(walls, tanks);
+            }
+        }
+
+        private void EatApple()
+        {
+            for (int i = 0; i < apples.Count; i++)
+            {
+                if (kolobok.CollidesWith(apples[i]))
+                {
+                    apples.RemoveAt(i);
+                    Score++;
+                    break;
+                }
+            }
+        }
+
+        private void KillKolobokByTank()
+        {
+            for (int i = 0; i < tanks.Count; i++)
+            {
+                if (tanks[i].CollidesWith(kolobok))
+                {
+                    gameOver = true;
+                    UnSubscribe();
+                    break;
+                }
+            }
+        }
+
+        private void EraseTankShots()
+        {
+            for (int i = 0; i < tanksShots.Count; i++)
+            {
+                tanksShots[i].Move();
+                if (tanksShots[i].CollidesWithWalls(walls))
+                {
+                    graphics.FillRectangle(Brushes.Black, tanksShots[i].PreviousX * cellSize, tanksShots[i].PreviousY * cellSize, cellSize, cellSize);
+                    tanksShots.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
+
+        private void KillKolobokByTankShot()
+        {
+            for (int j = 0; j < tanksShots.Count; j++)
+            {
+                if (kolobok.CollidesWith(tanksShots[j]))
+                {
+                    gameOver = true;
+                    break;
+                }
+            }
+        }
+
+        private void EraseKolobokShots()
+        {
+            for (int i = 0; i < kolobokShots.Count; i++)
+            {
+                kolobokShots[i].Move();
+                if (kolobokShots[i].CollidesWithWalls(walls))
+                {
+                    graphics.FillRectangle(Brushes.Black, kolobokShots[i].PreviousX * cellSize, kolobokShots[i].PreviousY * cellSize, cellSize, cellSize);
+                    kolobokShots.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
+
+        private void EraseDestroyedTank()
+        {
+            for (int i = 0; i < tanks.Count; i++)
+            {
+                for (int j = 0; j < kolobokShots.Count; j++)
+                {
+                    if (tanks[i].CollidesWith(kolobokShots[j]))
+                    {
+                        graphics.FillRectangle(Brushes.Black, tanks[i].PreviousX * cellSize, tanks[i].PreviousY * cellSize, cellSize, cellSize);
+                        graphics.FillRectangle(Brushes.Black, kolobokShots[j].X * cellSize, kolobokShots[j].Y * cellSize, cellSize, cellSize);
+                        graphics.FillRectangle(Brushes.Black, tanks[i].X * cellSize, tanks[i].Y * cellSize, cellSize, cellSize);
+                        graphics.FillRectangle(Brushes.Black, kolobokShots[j].PreviousX * cellSize, kolobokShots[j].PreviousY * cellSize, cellSize, cellSize);
+                        tanks.RemoveAt(i);
+                        kolobokShots.RemoveAt(j);
+                        i--;
+                        j--;
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void Init()
         {
             walls = new List<Wall>();
-            CreateWalls();
-
-            CreateKolobok();
-
             apples = new List<Apple>();
-            CreateApples();
-
             tanks = new List<Tank>();
+
+            CreateWalls();
+            CreateKolobok();
+            CreateApples();
             CreateTanks();
         }
 
@@ -130,7 +295,7 @@ namespace Tanks
             }
         }
 
-        public void Draw()
+        private void Draw()
         {
             graphics.DrawImage(kolobok.Img, kolobok.X * kolobok.Size, kolobok.Y * kolobok.Size, kolobok.Size, kolobok.Size);
             DrawWalls();
@@ -171,90 +336,95 @@ namespace Tanks
             }
         }
 
-        public void Step()
+        private void CreateKolobokShot(MovableMapObject sender)
         {
-            while (delta != TanksForm.CellSize + 5)
+            DefineShotDirection(sender, kolobokShots);
+
+            for (int i = 0; i < kolobokShots.Count - 1; i++)
             {
-                Move(kolobok, delta);
-
-                for (int i = 0; i < tanks.Count; i++)
+                if (kolobokShots.Last().CollidesWith(kolobokShots[i]))
                 {
-                    Move(tanks[i], delta);
+                    kolobokShots.RemoveAt(kolobokShots.Count - 1);
+                    return;
                 }
+            }
 
-                delta += 5;
+            if (kolobokShots.Last().CollidesWithWalls(walls))
+            {
+                kolobokShots.RemoveAt(kolobokShots.Count - 1);
                 return;
             }
-
-            kolobok.Move(walls);
-            delta = 5;
-            Move(kolobok, delta);
-
-            for (int i = 0; i < tanks.Count; i++)
-            {
-                if (tanks[i].CollidesWith(kolobok))
-                {
-                    gameOver = true;
-                    UnSubscribe();
-                    return;
-                }
-                tanks[i].Move(walls, tanks);
-
-                if (tanks[i].CollidesWith(kolobok))
-                {
-                    gameOver = true;
-                    UnSubscribe();
-                    return;
-                }
-                Move(tanks[i], delta);
-            }
-
-            delta += 5;
-
-            for (int i=0; i<apples.Count;i++)
-            {
-                if (kolobok.CollidesWith(apples[i]))
-                {
-                    apples.RemoveAt(i);
-                    Score++;
-                    break;
-                }
-            }
-
-            CreateApples();
-            DrawApples();
         }
 
-        public void Move(MovableMapObject movable, int delta)
+        private void DefineShotDirection(MovableMapObject sender, List<Shot> senderShots)
+        {
+            switch (sender.DirectionTo)
+            {
+                case (int)Direction.DOWN:
+                    {
+                        senderShots.Add(new Shot(sender.X, sender.Y + 1, sender.DirectionTo, sender));
+                        break;
+                    }
+                case (int)Direction.LEFT:
+                    {
+                        senderShots.Add(new Shot(sender.X - 1, sender.Y, sender.DirectionTo, sender));
+                        break;
+                    }
+                case (int)Direction.RIGHT:
+                    {
+                        senderShots.Add(new Shot(sender.X + 1, sender.Y, sender.DirectionTo, sender));
+                        break;
+                    }
+                case (int)Direction.UP:
+                    {
+                        senderShots.Add(new Shot(sender.X, sender.Y - 1, sender.DirectionTo, sender));
+                        break;
+                    }
+                default:
+                    break;
+            }
+        }
+
+        public void CreateTankShot(MovableMapObject sender)
+        {
+            DefineShotDirection(sender, tanksShots);
+
+            if (tanksShots.Last().CollidesWithWalls(walls))
+            {
+                tanksShots.RemoveAt(tanksShots.Count - 1);
+            }
+        }
+
+        private void Update(MovableMapObject movable, int delta)
         {
             if (movable.PreviousX < movable.X)
             {
-                graphics.FillRectangle(Brushes.Black, movable.PreviousX * TanksForm.CellSize + delta - 5, movable.PreviousY * TanksForm.CellSize, TanksForm.CellSize, TanksForm.CellSize);
-                graphics.DrawImage(movable.Img, movable.PreviousX * TanksForm.CellSize + delta, movable.PreviousY * TanksForm.CellSize, TanksForm.CellSize, TanksForm.CellSize);
+                graphics.FillRectangle(Brushes.Black, movable.PreviousX * cellSize + delta - 5, movable.PreviousY * cellSize, cellSize, cellSize);
+                graphics.DrawImage(movable.Img, movable.PreviousX * cellSize + delta, movable.PreviousY * cellSize, cellSize, cellSize);
                 return;
             }
             if (movable.PreviousX > movable.X)
             {
-                graphics.FillRectangle(Brushes.Black, movable.PreviousX * TanksForm.CellSize - delta + 5, movable.PreviousY * TanksForm.CellSize, TanksForm.CellSize, TanksForm.CellSize);
-                graphics.DrawImage(movable.Img, movable.PreviousX * TanksForm.CellSize - delta, movable.PreviousY * TanksForm.CellSize, TanksForm.CellSize, TanksForm.CellSize);
+                graphics.FillRectangle(Brushes.Black, movable.PreviousX * cellSize - delta + 5, movable.PreviousY * cellSize, cellSize, cellSize);
+                graphics.DrawImage(movable.Img, movable.PreviousX * cellSize - delta, movable.PreviousY * cellSize, cellSize, cellSize);
                 return;
             }
             if (movable.PreviousY < movable.Y)
             {
-                graphics.FillRectangle(Brushes.Black, movable.PreviousX * TanksForm.CellSize, movable.PreviousY * TanksForm.CellSize + delta - 5, TanksForm.CellSize, TanksForm.CellSize);
-                graphics.DrawImage(movable.Img, movable.PreviousX * TanksForm.CellSize, movable.PreviousY * TanksForm.CellSize + delta, TanksForm.CellSize, TanksForm.CellSize);
+                graphics.FillRectangle(Brushes.Black, movable.PreviousX * cellSize, movable.PreviousY * cellSize + delta - 5, cellSize, cellSize);
+                graphics.DrawImage(movable.Img, movable.PreviousX * cellSize, movable.PreviousY * cellSize + delta, cellSize, cellSize);
                 return;
             }
             if (movable.PreviousY > movable.Y)
             {
-                graphics.FillRectangle(Brushes.Black, movable.PreviousX * TanksForm.CellSize, movable.PreviousY * TanksForm.CellSize - delta + 5, TanksForm.CellSize, TanksForm.CellSize);
-                graphics.DrawImage(movable.Img, movable.PreviousX * TanksForm.CellSize, movable.PreviousY * TanksForm.CellSize - delta, TanksForm.CellSize, TanksForm.CellSize);
+                graphics.FillRectangle(Brushes.Black, movable.PreviousX * cellSize, movable.PreviousY * cellSize - delta + 5, cellSize, cellSize);
+                graphics.DrawImage(movable.Img, movable.PreviousX * cellSize, movable.PreviousY * cellSize - delta, cellSize, cellSize);
                 return;
             }
             if (movable.PreviousY == movable.Y && movable.PreviousX > movable.X)
             {
-                graphics.FillRectangle(Brushes.Black, movable.PreviousX * TanksForm.CellSize, movable.Y * TanksForm.CellSize, TanksForm.CellSize, TanksForm.CellSize);
-                graphics.DrawImage(movable.Img, movable.X * TanksForm.CellSize, movable.Y * TanksForm.CellSize, TanksForm.CellSize, TanksForm.CellSize);
+                graphics.FillRectangle(Brushes.Black, movable.PreviousX * cellSize, movable.Y * cellSize, cellSize, cellSize);
+                graphics.DrawImage(movable.Img, movable.X * cellSize, movable.Y * cellSize, cellSize, cellSize);
                 return;
             }
         }
@@ -266,12 +436,17 @@ namespace Tanks
             KeyDown?.Invoke(kolobok, new KeyEventArgs(key));
         }
 
-        public void Subscribe()
+        private void Subscribe()
         {
             KeyDown += new KeyEventHandler(kolobok.OnKeyDown);
+            kolobok.MakeShot += CreateKolobokShot;
+            for (int i = 0; i < tanks.Count; i++)
+            {
+                tanks[i].MakeShot += CreateTankShot;
+            }
         }
 
-        public void UnSubscribe()
+        private void UnSubscribe()
         {
             if (KeyDown != null)
             {

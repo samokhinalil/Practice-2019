@@ -133,6 +133,21 @@
   <data name="BunUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\BunUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="GameOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\GameOver.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ShotDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\ShotDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ShotLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\ShotLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ShotRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\ShotRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ShotUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\ShotUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="TankDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\TankDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

@@ -1,27 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tanks.Properties;
 
 namespace Tanks
 {
     public class Tank : MovableMapObject
     {
+        private Random rnd = new Random();
+
+        public event Shoot MakeShot;
+
         public Tank()
         {
-            ChangePicture();
+            ChangePicture(Resources.TankLeft, Resources.TankUp, Resources.TankDown, Resources.TankRight);
         }
 
         public Tank(int x, int y) : base(x, y)
         {
-            ChangePicture();
+            ChangePicture(Resources.TankLeft, Resources.TankUp, Resources.TankDown, Resources.TankRight);
         }
 
         public void Move(List<Wall> Walls, List<Tank> Tanks)
         {
+            var probability = rnd.NextDouble();
+
+            if (probability < 0.4)
+            {
+                ChangeDirection(rnd.Next(0, 3));
+            }
+
+            if (probability < 0.15)
+            {
+                MakeShot?.Invoke(this);
+            }
+
             PreviousY = Y;
             PreviousX = X;
 
@@ -78,7 +90,7 @@ namespace Tanks
                 default:
                     break;
             }
-            ChangePicture();
+            ChangePicture(Resources.TankLeft, Resources.TankUp, Resources.TankDown, Resources.TankRight);
         }
 
         public bool CollidesWithTanks(List<Tank> Tanks)
@@ -91,39 +103,6 @@ namespace Tanks
                 }
             }
             return false;
-        }
-
-        public void ChangePicture()
-        {
-            if (Img == null)
-            {
-                Img = new Bitmap(Resources.TankLeft);
-            }
-            switch (DirectionTo)
-            {
-                case (int)Direction.UP:
-                    {
-                        Img = Resources.TankUp;
-                        break;
-                    }
-                case ((int)Direction.DOWN):
-                    {
-                        Img = Resources.TankDown;
-                        break;
-                    }
-                case (int)Direction.RIGHT:
-                    {
-                        Img = Resources.TankRight;
-                        break;
-                    }
-                case (int)Direction.LEFT:
-                    {
-                        Img = Resources.TankLeft;
-                        break;
-                    }
-                default:
-                    break;
-            }
         }
     }
 }
