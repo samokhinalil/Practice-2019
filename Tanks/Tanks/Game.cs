@@ -8,22 +8,32 @@ namespace Tanks
 {
     public class Game
     {
-        private Kolobok kolobok;
+        private Kolobok kolobok = new Kolobok();
         private List<Wall> walls = new List<Wall>();
         private List<Tank> tanks = new List<Tank>();
         private List<Apple> apples = new List<Apple>();
         private List<Shot> kolobokShots = new List<Shot>();
         private List<Shot> tanksShots = new List<Shot>();
 
-        private int width;
-        private int height;
+        public List<MapObject> MapObjects
+        {
+            get
+            {
+                var list = new List<MapObject>();
+                list.Add(kolobok);
+                list.AddRange(tanks);
+                list.AddRange(apples);
+                return list;
+            }
+        }
+
+        public bool IsGameOver { get; private set; }
+
         private int applesCount;
         private int tanksCount;
-        private int speed;
         private Graphics graphics;
         private int delta = 30;
         private int deltaShot = 30;
-        private bool gameOver;
         private int cellSize = 25;
 
         private static string[] wallArrangement = {
@@ -51,21 +61,35 @@ namespace Tanks
 
         public int Score { get; private set; } = 0;
 
-        public Game(int width, int height, int applesCount, int tanksCount, int speed, Graphics graphics)
+        public Game(int applesCount, int tanksCount, Graphics graphics)
         {
-            this.width = width;
-            this.height = height;
             this.applesCount = applesCount;
             this.tanksCount = tanksCount;
-            this.speed = speed;
             this.graphics = graphics;
         }
 
         public void Start()
         {
+            UnSubscribe();
+            IsGameOver = false;
+            Score = 0;
+            delta = 30;
+            deltaShot = 30;
             Init();
             Draw();
             Subscribe();
+        }
+
+        private void Init()
+        {
+            walls = new List<Wall>();
+            apples = new List<Apple>();
+            tanks = new List<Tank>();
+
+            CreateWalls();
+            CreateKolobok();
+            CreateApples();
+            CreateTanks();
         }
 
         public void Step()
@@ -129,6 +153,12 @@ namespace Tanks
             DrawApples();
         }
 
+        public void End()
+        {
+            graphics.DrawImage(Resources.GameOver, 0, 0, 500, 500);
+            UnSubscribe();
+        }
+
         private void UpdateTanks()
         {
             for (int i = 0; i < tanks.Count; i++)
@@ -164,8 +194,7 @@ namespace Tanks
             {
                 if (tanks[i].CollidesWith(kolobok))
                 {
-                    gameOver = true;
-                    UnSubscribe();
+                    IsGameOver = true;
                     break;
                 }
             }
@@ -191,7 +220,7 @@ namespace Tanks
             {
                 if (kolobok.CollidesWith(tanksShots[j]))
                 {
-                    gameOver = true;
+                    IsGameOver = true;
                     break;
                 }
             }
@@ -231,18 +260,6 @@ namespace Tanks
                     }
                 }
             }
-        }
-
-        private void Init()
-        {
-            walls = new List<Wall>();
-            apples = new List<Apple>();
-            tanks = new List<Tank>();
-
-            CreateWalls();
-            CreateKolobok();
-            CreateApples();
-            CreateTanks();
         }
 
         private void CreateKolobok()
@@ -297,6 +314,7 @@ namespace Tanks
 
         private void Draw()
         {
+            graphics.FillRectangle(Brushes.Black, 0, 0, 500, 500);
             graphics.DrawImage(kolobok.Img, kolobok.X * kolobok.Size, kolobok.Y * kolobok.Size, kolobok.Size, kolobok.Size);
             DrawWalls();
             DrawTanks();

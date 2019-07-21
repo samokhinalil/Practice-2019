@@ -9,6 +9,7 @@ namespace Tanks
         private PictureBox map;
         private Bitmap backgroungMap;
         private Graphics mapGraphics;
+        private AboutForm aboutForm;
 
         private Game game;
 
@@ -22,15 +23,7 @@ namespace Tanks
 
         private void TanksForm_Load(object sender, EventArgs e)
         {
-            int width = 500;
-            int height = 500;
-            int applesCount = 5;
-            int tanksCount = 5;
-            int speed = 10;
-            CreateBitmapAtRuntime(width, height);
-            game = new Game(width, height, applesCount, tanksCount, speed, mapGraphics);
-            game.Start();
-            map.Invalidate();
+            CreateBitmapAtRuntime(500, 500);
         }
 
         public void CreateBitmapAtRuntime(int width, int height)
@@ -50,10 +43,23 @@ namespace Tanks
             game.Step();
             map.Invalidate();
             tbScore.Text = game.Score.ToString();
+            if (aboutForm != null)
+            {
+                aboutForm.RefreshInformation(game.MapObjects);
+            }
+
+            if (game.IsGameOver)
+            {
+                gameTimer.Enabled = false;
+                shotTimer.Enabled = false;
+                game.End();
+                btnStartGame.Visible = true;
+            }
         }
 
         private void BtnStartGame_Click(object sender, EventArgs e)
         {
+            StartGame();
             btnStartGame.Visible = false;
             gameTimer.Enabled = true;
             shotTimer.Enabled = true;
@@ -72,6 +78,26 @@ namespace Tanks
         private void TanksForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             backgroungMap.Dispose();
+        }
+
+        private void CtlAbout_Click(object sender, EventArgs e)
+        {
+            aboutForm = new AboutForm(game.MapObjects);
+            aboutForm.Show();
+        }
+
+        private void StartGame()
+        {
+            SettingsForm settings = new SettingsForm();
+            settings.ShowDialog();
+            if (settings.DialogResult == DialogResult.OK)
+            {
+                game = new Game(settings.ApplesCount, settings.TanksCount, mapGraphics);
+                gameTimer.Interval = settings.Speed;
+                shotTimer.Interval = settings.ShotSpeed;
+                game.Start();
+                map.Invalidate();
+            }
         }
     }
 }

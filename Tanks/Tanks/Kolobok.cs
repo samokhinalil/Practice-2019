@@ -106,7 +106,6 @@ namespace Tanks
                             ((Kolobok)sender).ChangeDirection((int)Direction.RIGHT);
                             break;
                         }
-                    case Keys.Space:
                     case Keys.E:
                         {
                             MakeShot?.Invoke(this);
