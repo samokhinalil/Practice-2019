@@ -8,6 +8,10 @@ namespace Tanks
 {
     public class Game
     {
+        private PictureBox map;
+        private Bitmap backgroundMap;
+        private Graphics graphics;
+
         private Kolobok kolobok = new Kolobok();
         private List<Wall> walls = new List<Wall>();
         private List<Tank> tanks = new List<Tank>();
@@ -31,7 +35,6 @@ namespace Tanks
 
         private int applesCount;
         private int tanksCount;
-        private Graphics graphics;
         private int delta = 30;
         private int deltaShot = 30;
         private int cellSize = 25;
@@ -61,11 +64,11 @@ namespace Tanks
 
         public int Score { get; private set; } = 0;
 
-        public Game(int applesCount, int tanksCount, Graphics graphics)
+        public Game(int applesCount, int tanksCount, PictureBox map)
         {
             this.applesCount = applesCount;
             this.tanksCount = tanksCount;
-            this.graphics = graphics;
+            this.map = map;
         }
 
         public void Start()
@@ -104,6 +107,7 @@ namespace Tanks
                 }
 
                 delta += 5;
+                map.Image = backgroundMap;
                 return;
             }
 
@@ -121,6 +125,7 @@ namespace Tanks
             EatApple();
             CreateApples();
             DrawApples();
+            map.Image = backgroundMap;
         }
 
         public void ShotStep()
@@ -155,7 +160,7 @@ namespace Tanks
 
         public void End()
         {
-            graphics.DrawImage(Resources.GameOver, 0, 0, 500, 500);
+            graphics.DrawImage(Resources.GameOver, 0, 0, map.Width, map.Height);
             UnSubscribe();
         }
 
@@ -314,11 +319,14 @@ namespace Tanks
 
         private void Draw()
         {
-            graphics.FillRectangle(Brushes.Black, 0, 0, 500, 500);
+            backgroundMap = new Bitmap(map.Width, map.Height);
+            graphics = Graphics.FromImage(backgroundMap);
+            graphics.FillRectangle(Brushes.Black, 0, 0, map.Width, map.Height);
             graphics.DrawImage(kolobok.Img, kolobok.X * kolobok.Size, kolobok.Y * kolobok.Size, kolobok.Size, kolobok.Size);
             DrawWalls();
             DrawTanks();
             DrawApples();
+            map.Image = backgroundMap;
         }
 
         private void DrawWalls()
@@ -419,31 +427,21 @@ namespace Tanks
             {
                 graphics.FillRectangle(Brushes.Black, movable.PreviousX * cellSize + delta - 5, movable.PreviousY * cellSize, cellSize, cellSize);
                 graphics.DrawImage(movable.Img, movable.PreviousX * cellSize + delta, movable.PreviousY * cellSize, cellSize, cellSize);
-                return;
             }
             if (movable.PreviousX > movable.X)
             {
                 graphics.FillRectangle(Brushes.Black, movable.PreviousX * cellSize - delta + 5, movable.PreviousY * cellSize, cellSize, cellSize);
                 graphics.DrawImage(movable.Img, movable.PreviousX * cellSize - delta, movable.PreviousY * cellSize, cellSize, cellSize);
-                return;
             }
             if (movable.PreviousY < movable.Y)
             {
                 graphics.FillRectangle(Brushes.Black, movable.PreviousX * cellSize, movable.PreviousY * cellSize + delta - 5, cellSize, cellSize);
                 graphics.DrawImage(movable.Img, movable.PreviousX * cellSize, movable.PreviousY * cellSize + delta, cellSize, cellSize);
-                return;
             }
             if (movable.PreviousY > movable.Y)
             {
                 graphics.FillRectangle(Brushes.Black, movable.PreviousX * cellSize, movable.PreviousY * cellSize - delta + 5, cellSize, cellSize);
                 graphics.DrawImage(movable.Img, movable.PreviousX * cellSize, movable.PreviousY * cellSize - delta, cellSize, cellSize);
-                return;
-            }
-            if (movable.PreviousY == movable.Y && movable.PreviousX > movable.X)
-            {
-                graphics.FillRectangle(Brushes.Black, movable.PreviousX * cellSize, movable.Y * cellSize, cellSize, cellSize);
-                graphics.DrawImage(movable.Img, movable.X * cellSize, movable.Y * cellSize, cellSize, cellSize);
-                return;
             }
         }
 

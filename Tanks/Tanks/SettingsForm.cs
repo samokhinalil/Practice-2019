@@ -42,5 +42,10 @@ namespace Tanks
                     break;
             }
         }
+
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

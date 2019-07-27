@@ -41,8 +41,6 @@ namespace Tanks
             {
                 case (int)Direction.DOWN:
                     {
-                        PreviousY = Y;
-                        PreviousX = X;
                         Y++;
                         if (CollidesWithWalls(Walls) || CollidesWithTanks(Tanks))
                         {
@@ -53,8 +51,6 @@ namespace Tanks
                     }
                 case (int)Direction.LEFT:
                     {
-                        PreviousY = Y;
-                        PreviousX = X;
                         X--;
                         if (CollidesWithWalls(Walls) || CollidesWithTanks(Tanks))
                         {
@@ -65,8 +61,6 @@ namespace Tanks
                     }
                 case (int)Direction.RIGHT:
                     {
-                        PreviousY = Y;
-                        PreviousX = X;
                         X++;
                         if (CollidesWithWalls(Walls) || CollidesWithTanks(Tanks))
                         {
@@ -77,8 +71,6 @@ namespace Tanks
                     }
                 case (int)Direction.UP:
                     {
-                        PreviousY = Y;
-                        PreviousX = X;
                         Y--;
                         if (CollidesWithWalls(Walls) || CollidesWithTanks(Tanks))
                         {

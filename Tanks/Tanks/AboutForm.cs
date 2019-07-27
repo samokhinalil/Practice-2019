@@ -20,8 +20,7 @@ namespace Tanks
         public AboutForm(List<MapObject> mapObjects)
         {
             InitializeComponent();
-            ctlAboutObjects.DataSource = null;
-            ctlAboutObjects.DataSource = mapObjects;
+            RefreshInformation(mapObjects);
         }
 
         public void RefreshInformation(List<MapObject> mapObjects)

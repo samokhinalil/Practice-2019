@@ -35,17 +35,18 @@
             // ctlAboutObjects
             // 
             this.ctlAboutObjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ctlAboutObjects.Location = new System.Drawing.Point(1, 2);
+            this.ctlAboutObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ctlAboutObjects.Location = new System.Drawing.Point(0, 0);
             this.ctlAboutObjects.Name = "ctlAboutObjects";
             this.ctlAboutObjects.RowHeadersVisible = false;
-            this.ctlAboutObjects.Size = new System.Drawing.Size(356, 275);
+            this.ctlAboutObjects.Size = new System.Drawing.Size(386, 314);
             this.ctlAboutObjects.TabIndex = 0;
             // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(360, 278);
+            this.ClientSize = new System.Drawing.Size(386, 314);
             this.Controls.Add(this.ctlAboutObjects);
             this.Name = "AboutForm";
             this.Text = "About";

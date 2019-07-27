@@ -30,10 +30,6 @@ namespace Tanks
 
         public void ChangePicture(Bitmap imgLeft, Bitmap imgUp, Bitmap imgDown, Bitmap imgRight)
         {
-            if (Img == null)
-            {
-                Img = new Bitmap(imgLeft);
-            }
             switch (DirectionTo)
             {
                 case (int)Direction.UP:
