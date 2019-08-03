@@ -85,19 +85,19 @@
             // 
             this.ctlAbout.Enabled = false;
             this.ctlAbout.Name = "ctlAbout";
-            this.ctlAbout.Size = new System.Drawing.Size(180, 22);
+            this.ctlAbout.Size = new System.Drawing.Size(107, 22);
             this.ctlAbout.Text = "About";
             this.ctlAbout.Click += new System.EventHandler(this.CtlAbout_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(104, 6);
             // 
             // ctlExit
             // 
             this.ctlExit.Name = "ctlExit";
-            this.ctlExit.Size = new System.Drawing.Size(180, 22);
+            this.ctlExit.Size = new System.Drawing.Size(107, 22);
             this.ctlExit.Text = "Exit";
             this.ctlExit.Click += new System.EventHandler(this.CtlExit_Click);
             // 
@@ -122,7 +122,6 @@
             this.Controls.Add(this.tbScore);
             this.Controls.Add(this.btnStartGame);
             this.Controls.Add(this.menuStrip1);
-            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(520, 540);
             this.Name = "TanksForm";
